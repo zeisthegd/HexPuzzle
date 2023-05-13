@@ -1,0 +1,96 @@
+{
+    "name": "PlayerInput",
+    "maps": [
+        {
+            "name": "Game",
+            "id": "bee15ce1-695a-4a9c-b927-1f47477d752a",
+            "actions": [
+                {
+                    "name": "SpinLeft",
+                    "type": "Button",
+                    "id": "aebbc374-c674-401b-bda7-7a029514e2df",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "SpinRight",
+                    "type": "Button",
+                    "id": "f43840df-4cff-44f8-9bfb-aac3bc3a7a3a",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Scroll",
+                    "type": "Value",
+                    "id": "85dfdab8-ab59-48c9-bc46-30a70556ba25",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "3cfde012-de12-4c95-bcca-daf2e6d7c7f4",
+                    "path": "<Mouse>/backButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpinLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "3358475a-b4de-4a46-8bee-2c191c804f8a",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpinLeft",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "d2a95db4-4900-4779-ad65-b1bfe5d6f0f2",
+                    "path": "<Mouse>/forwardButton",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpinRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "67465ca9-2f84-4231-b303-0c28e03c118e",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "SpinRight",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "eb5e2ac0-dc9e-4b2a-840c-ee20d8f12e7c",
+                    "path": "<Mouse>/scroll",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Scroll",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}

@@ -41,7 +41,6 @@ namespace Penwyn.HexMap
             Generate();
         }
 
-        [Button("Generate")]
         public virtual void Generate()
         {
             Map.Clear();

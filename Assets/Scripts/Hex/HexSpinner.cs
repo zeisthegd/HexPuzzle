@@ -11,6 +11,7 @@ namespace Penwyn.HexMap
 {
     public class HexSpinner : SingletonMonoBehaviour<HexSpinner>
     {
+        public bool WillLiftUp = true;
         private HexTile _chosenTile;
 
         private void Start()
@@ -21,16 +22,22 @@ namespace Penwyn.HexMap
         public void SelectTile(HexTile tile)
         {
             _chosenTile = tile;
-            _chosenTile.transform.DOComplete();
-            _chosenTile.transform.DOMoveY(_chosenTile.transform.position.y + 0.075F, 0.1F);
-            _chosenTile.SpriteRenderer.sortingOrder += 3;
+            if (WillLiftUp)
+            {
+                _chosenTile.transform.DOComplete();
+                _chosenTile.transform.DOMoveY(_chosenTile.transform.position.y + 0.075F, 0.1F);
+                _chosenTile.SpriteRenderer.sortingOrder += 3;
+            }
         }
 
-        public void UnselectTile()
+        public void UnselectTile(HexTile tile)
         {
-            _chosenTile.transform.DOComplete();
-            _chosenTile.transform.DOMove(Hex.HexToPixelWorldPos(_chosenTile.Hex), 0.1F);
-            _chosenTile.SpriteRenderer.sortingOrder -= 3;
+            if (WillLiftUp)
+            {
+                _chosenTile.transform.DOComplete();
+                _chosenTile.transform.DOMove(Hex.HexToPixelWorldPos(_chosenTile.Hex), 0.1F);
+                _chosenTile.SpriteRenderer.sortingOrder -= 3;
+            }
             _chosenTile = null;
         }
 
@@ -65,12 +72,16 @@ namespace Penwyn.HexMap
         {
             InputReader.Instance.SpinLeftPressed += SpinChosenLeft;
             InputReader.Instance.SpinRightPressed += SpinChosenRight;
+            HexTileEventList.Instance.TileHovered.OnEventRaised += SelectTile;
+            HexTileEventList.Instance.TileExit.OnEventRaised += UnselectTile;
         }
 
         private void OnDisable()
         {
             InputReader.Instance.SpinLeftPressed -= SpinChosenLeft;
             InputReader.Instance.SpinRightPressed -= SpinChosenRight;
+            HexTileEventList.Instance.TileHovered.OnEventRaised -= SelectTile;
+            HexTileEventList.Instance.TileExit.OnEventRaised -= UnselectTile;
         }
 
         public HexTile ChosenTile { get => _chosenTile; }

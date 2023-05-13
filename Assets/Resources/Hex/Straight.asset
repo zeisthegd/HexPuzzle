@@ -16,3 +16,4 @@ MonoBehaviour:
   Sprite: {fileID: -2030734219, guid: 90a01627784149840b92a3889b255e15, type: 3}
   ConnectedDirections: 0200000005000000
   SpinAble: 1
+  Category: 3

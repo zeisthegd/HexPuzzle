@@ -11,6 +11,7 @@ namespace Penwyn.HexMap
         public Sprite Sprite;
         public List<HexDirection.Direction> ConnectedDirections;
         public bool SpinAble  = false;
+        public HexCategory Category;
     }
 }
 

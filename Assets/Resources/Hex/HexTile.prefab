@@ -13,8 +13,9 @@ GameObject:
   - component: {fileID: 6523361627781425263}
   - component: {fileID: 8123071846273621257}
   - component: {fileID: 5517191893592463291}
+  - component: {fileID: 6389132916756762475}
   m_Layer: 0
-  m_Name: Hextile
+  m_Name: HexTile
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -175,3 +176,34 @@ MonoBehaviour:
             m_StringArgument: 
             m_BoolArgument: 0
           m_CallState: 2
+  - eventID: 2
+    callback:
+      m_PersistentCalls:
+        m_Calls:
+        - m_Target: {fileID: 6523361627781425263}
+          m_TargetAssemblyTypeName: Penwyn.HexMap.HexTile, Penwyn.Game
+          m_MethodName: OnClick
+          m_Mode: 0
+          m_Arguments:
+            m_ObjectArgument: {fileID: 0}
+            m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+            m_IntArgument: 0
+            m_FloatArgument: 0
+            m_StringArgument: 
+            m_BoolArgument: 0
+          m_CallState: 2
+--- !u!114 &6389132916756762475
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083107477315715446}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 56adcbd4a1b80e042b905d02333fc95c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  LocalOffset: {x: 0, y: -0.1, z: 0}
+  ShadowColor: {r: 0.6039216, g: 0.6039216, b: 0.5921569, a: 1}
+  CustomShadowSprite: {fileID: 1782130489, guid: 90a01627784149840b92a3889b255e15, type: 3}

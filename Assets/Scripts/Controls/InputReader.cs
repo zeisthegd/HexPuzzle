@@ -51,7 +51,7 @@ namespace Penwyn.Game
             {
                 SpinLeftPressed?.Invoke();
             }
-            else if (IsScrollDown(value.y) && context.started)
+            if (IsScrollDown(value.y) && context.started)
             {
                 SpinRightPressed?.Invoke();
             }

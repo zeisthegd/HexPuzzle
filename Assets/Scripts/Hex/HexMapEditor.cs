@@ -13,7 +13,7 @@ namespace Penwyn.HexMap
     {
         [Header("Editor")]
         public HexType EmptyType;
-        public HexType HexToPlace;
+        public HexType HexTypeToPlace;
 
         private List<Hex> _placedHexes = new List<Hex>();
 
@@ -27,6 +27,13 @@ namespace Penwyn.HexMap
             DestroyAllObjs();
             InitHexMap();
         }
+
+        public override void Load(List<Hex> hexes)
+        {
+            base.Load(hexes);
+            _placedHexes = hexes;
+        }
+
         protected override void InitHexMap()
         {
             for (int x = -MapSize; x < MapSize; x++)
@@ -43,11 +50,15 @@ namespace Penwyn.HexMap
 
         private void OnTileHovered(HexTile tile)
         {
-            if (HexToPlace != null)
+            if (HexTypeToPlace != null)
             {
                 _beforeChosenType = tile.Type;
                 _chosenTile = tile;
-                _chosenTile.Create(HexToPlace);
+                if (_beforeChosenType != HexTypeToPlace)
+                {
+                    _chosenTile.ResetRotation();
+                }
+                _chosenTile.Create(HexTypeToPlace);
             }
         }
 
@@ -70,11 +81,12 @@ namespace Penwyn.HexMap
         /// <param name="tile"></param>
         private void OnTileSelected(HexTile tile)
         {
-            if (tile != null && _chosenTile != null && tile == _chosenTile && HexToPlace != null)
+            if (tile != null && _chosenTile != null && tile == _chosenTile && HexTypeToPlace != null)
             {
-                _chosenTile.Create(HexToPlace);
+                _chosenTile.Create(HexTypeToPlace);
                 _beforeChosenType = tile.Type;
-                _placedHexes.Add(_chosenTile.Hex);
+                if (!_placedHexes.Contains(_chosenTile.Hex))
+                    _placedHexes.Add(_chosenTile.Hex);
             }
         }
 

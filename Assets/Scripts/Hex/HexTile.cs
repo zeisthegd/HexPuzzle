@@ -67,6 +67,13 @@ namespace Penwyn.HexMap
             AudioPlayer.Instance.PlayCardHoveredSFX();
         }
 
+        public void ResetRotation()
+        {
+            _hex.ResetRotatedAngle();
+            this.transform.DOComplete();
+            this.transform.rotation = Quaternion.Euler(Vector3.zero);
+        }
+
         public void OnHovered()
         {
             HexTileEventList.Instance.TileHovered.RaiseEvent(this);

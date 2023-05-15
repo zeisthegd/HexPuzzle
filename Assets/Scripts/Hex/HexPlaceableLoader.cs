@@ -34,7 +34,7 @@ namespace Penwyn.HexMap
         {
             foreach (HexType type in PlaceableHexList)
             {
-                HexSelectorMenu.CreateHexButton(type).onClick.AddListener(() => { FindObjectOfType<HexMapEditor>().HexToPlace = type; });
+                HexSelectorMenu.CreateHexButton(type).onClick.AddListener(() => { FindObjectOfType<HexMapEditor>().HexTypeToPlace = type; });
             }
         }
 

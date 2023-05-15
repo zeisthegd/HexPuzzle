@@ -15,18 +15,22 @@ namespace Penwyn.HexMap
         [SerializeField] private int _rotatedAngle;
         [SerializeField] private HexType _type;
 
+        private bool _isFlooded = false;
+
         public int S { get => -_q - _r; }//Slice
 
         public Hex(int q, int r)
         {
             this._q = q;
             this._r = r;
+            RotatedAngle = 0;
         }
 
         public Hex(int q, int r, HexType type)
         {
             this._q = q;
             this._r = r;
+            RotatedAngle = 0;
             Load(type);
         }
 
@@ -35,27 +39,17 @@ namespace Penwyn.HexMap
             this.Type = type;
             _connectedDirs = new HexDirection.Direction[type.ConnectedDirections.Count];
             type.ConnectedDirections.CopyTo(this._connectedDirs);
-            RotatedAngle = 0;
         }
 
         public Hex Add(Hex b)
         {
-            return new Hex(this._q + b._r, this._r + b._r);
+            return new Hex(this._q + b._q, this._r + b._r);
         }
 
         public Hex Subtract(Hex b)
         {
-            return new Hex(this._q - b._r, this._r - b._r);
+            return new Hex(this._q - b._q, this._r - b._r);
         }
-        #region Neighbor
-
-        public Hex Neighbor(int direction)
-        {
-            return Add(HexDirection.Get(direction));
-        }
-
-        #endregion
-
 
         #region  DISTANCE
         public int Length()
@@ -63,6 +57,9 @@ namespace Penwyn.HexMap
             return (int)((Mathf.Abs(this._q) + Mathf.Abs(this._r) + Mathf.Abs(S)) / 2);
         }
 
+        /// <summary>
+        /// Return distance from this hex to b.
+        /// </summary>
         public int Distance(Hex b)
         {
             return Subtract(b).Length();
@@ -72,6 +69,9 @@ namespace Penwyn.HexMap
         #region  #CONNECTION
         [SerializeField] private HexDirection.Direction[] _connectedDirs = new HexDirection.Direction[] { };
 
+        /// <summary>
+        /// Spin hex to the left. Angle -= 60.
+        /// </summary>
         public void SpinConnectLeft()
         {
             if (_connectedDirs.Length > 0)
@@ -87,6 +87,9 @@ namespace Penwyn.HexMap
             }
         }
 
+        /// <summary>
+        /// Spin hex to the right. Angle += 60.
+        /// </summary>
         public void SpinConnectRight()
         {
             if (_connectedDirs.Length > 0)
@@ -102,20 +105,72 @@ namespace Penwyn.HexMap
             }
         }
 
+        /// <summary>
+        /// Rotate the hex back to 0.
+        /// </summary>
+        public void ResetRotatedAngle()
+        {
+            RotateToAngle(0);
+        }
+
+        /// <summary>
+        /// Rotate hex to a certain angle. If input angle is bigger than current angle, rotate right. Else rotate left.
+        /// Each increment of 60 equals one rotation.
+        /// </summary>
+        public void RotateToAngle(int angle)
+        {
+            int totalSpin = Mathf.Abs(angle - RotatedAngle) / 60;
+            for (int i = 0; i < totalSpin; i++)
+            {
+                if (angle > RotatedAngle)
+                    SpinConnectRight();
+                else
+                    SpinConnectLeft();
+            }
+            _rotatedAngle = angle;
+        }
+
+        /// <summary>
+        /// Add value to current rotating angle. If bigger than 360, new angle equals 360 - |new angle|.
+        /// </summary>
         private void RotateAngle(int value)
         {
-            RotatedAngle += value;
-            if (RotatedAngle < 0)
+            _rotatedAngle += value;
+            if (_rotatedAngle < 0)
             {
-                RotatedAngle = 360 - RotatedAngle;
+                _rotatedAngle = 360 - Mathf.Abs(_rotatedAngle);
             }
-            if (RotatedAngle >= 360)
+            if (_rotatedAngle >= 360)
             {
-                RotatedAngle -= 360;
+                _rotatedAngle -= 360;
             }
         }
 
+        /// <summary>
+        /// Create a new hex in each connected direction and return the list of them.
+        /// </summary>
+        public List<Hex> NeighborList()
+        {
+            List<Hex> neighbors = new List<Hex>();
+            foreach (int direction in ConnectedDirs)
+            {
+                Hex neighBor = Neighbor(direction);
+                neighbors.Add(neighBor);
+            }
+            return neighbors;
+        }
+
+        /// <summary>
+        /// Get a hex in the chosen direction. Return null if the chosen direction is not opened.
+        /// </summary>
+        /// <param name="direction">Hex Direction</param>
+        public Hex Neighbor(int direction)
+        {
+            return Add(HexDirection.Get(direction));
+        }
+
         #endregion
+
 
         public static Vector3 HexToPixelWorldPos(Hex hex)
         {
@@ -138,11 +193,14 @@ namespace Penwyn.HexMap
             var row = HexSize * Mathf.Sqrt(3) / 2 * hex._r;
             return new Vector3(col, 0, row);
         }
+
         public HexDirection.Direction[] ConnectedDirs { get => _connectedDirs; }
         public int RotatedAngle { get => _rotatedAngle; set => _rotatedAngle = value; }
         public HexType Type { get => _type; set => _type = value; }
         public int Q { get => _q; set => _q = value; }
         public int R { get => _r; set => _r = value; }
+        public bool IsFlooded { get => _isFlooded; set => _isFlooded = value; }
+        public Vector2 Position { get => new Vector2(Q, R); }
     }
 }
 

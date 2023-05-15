@@ -26,9 +26,8 @@ namespace Penwyn.HexMap
         [Header("Map Arrays")]
         [ReadOnly] public List<Hex> Map = new List<Hex>();
         [ReadOnly] public List<HexTile> TileMap = new List<HexTile>();
-        private Hex _startHex;
-        private Hex _endHex;
-
+        private List<Hex> _startHexes;
+        private List<Hex> _endHexes;
 
         private void Awake()
         {
@@ -45,18 +44,30 @@ namespace Penwyn.HexMap
             Map.Clear();
             DestroyAllObjs();
             InitHexMap();
-            GenerateRandomStartEnd();
         }
 
         public virtual void Load(List<Hex> hexes)
         {
+            HexSpinner hexSpinner = FindObjectOfType<HexSpinner>();
             foreach (Hex hex in hexes)
             {
+                HexTile tile;
                 if (Find(hex) == null)
-                    CreateHexTile(hex, hex.Type);
+                {
+                    tile = CreateHexTile(hex, hex.Type);
+                }
                 else
-                    GetTile(hex).Create(hex, hex.Type);
+                {
+                    tile = GetTile(hex);
+                }
+                tile.ResetRotation();
+
+                tile.Create(hex, hex.Type);
+                hexSpinner?.RotateToAngle(tile);
+
             }
+            _startHexes = hexes.FindAll(x => x.Type.Category == HexCategory.START);
+            _endHexes = hexes.FindAll(x => x.Type.Category == HexCategory.END);
             Map = hexes;
         }
 
@@ -81,39 +92,19 @@ namespace Penwyn.HexMap
             CreateHexTile(newHex, type);
         }
 
-        protected virtual void CreateHexTile(Hex hex, HexType type)
+        protected virtual HexTile CreateHexTile(Hex hex, HexType type)
         {
             HexTile newTile;
             newTile = Instantiate(HexTilePrefab);
             newTile.Create(hex, type);
             newTile.transform.SetParent(this.transform);
             TileMap.Add(newTile);
-        }
-
-        protected void GenerateRandomStartEnd()
-        {
-            if (MapSize <= 1)
-            {
-                Debug.LogWarning("Cannot generate START and END if MapSize is lower than 2.");
-                return;
-            }
-            _startHex = GetRandomHexInMap();
-            do
-            {
-                _endHex = GetRandomHexInMap();
-            }
-            while (_startHex.Distance(_endHex) < 2);
-
-            _startHex.Load(StartHexData);
-            _endHex.Load(EndHexData);
-
-            GetTile(StartHex).Create(_startHex, StartHexData);
-            GetTile(EndHex).Create(_endHex, EndHexData);
+            return newTile;
         }
 
         public HexTile GetTile(Hex hex)
         {
-            return TileMap.Find(x => x.Hex.Q == hex.Q && x.Hex.R == hex.R);
+            return TileMap.Find(x => (x.Hex.Q == hex.Q) && (x.Hex.R == hex.R));
         }
 
         public Hex Find(Hex b)
@@ -122,7 +113,7 @@ namespace Penwyn.HexMap
         }
         public Hex Find(int q, int r)
         {
-            return Map.Find(x => x.Q == q && x.R == r);
+            return Map.Find(x => (x.Q == q) && (x.R == r));
         }
 
         public Hex GetRandomHexInMap()
@@ -139,8 +130,8 @@ namespace Penwyn.HexMap
             TileMap.Clear();
         }
 
-        public Hex StartHex { get => _startHex; }
-        public Hex EndHex { get => _endHex; }
+        public List<Hex> StartHexes { get => _startHexes; set => _startHexes = value; }
+        public List<Hex> EndHexes { get => _endHexes; set => _endHexes = value; }
     }
 
 }

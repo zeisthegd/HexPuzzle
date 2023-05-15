@@ -59,9 +59,23 @@ namespace Penwyn.HexMap
             }
         }
 
+
+        /// <summary>
+        /// Rotate hex to a saved angle starting from zero. If input angle is bigger than current angle, rotate right. Else rotate left.
+        /// Each increment of 60 equals one rotation.
+        /// </summary>
+        public void RotateToAngle(HexTile tileToRotate)
+        {
+            int totalSpin = Mathf.Abs(tileToRotate.Hex.RotatedAngle) / 60;
+            for (int i = 0; i < totalSpin; i++)
+            {
+                tileToRotate?.SpinRight();
+            }
+        }
+
         private bool CanSpin()
         {
-            return _chosenTile != null && (EditorMode || _chosenTile.SpinAble);
+            return _chosenTile != null && _chosenTile.Type.Category != HexCategory.EMPTY && (EditorMode || _chosenTile.SpinAble);
         }
 
         private void OnEnable()

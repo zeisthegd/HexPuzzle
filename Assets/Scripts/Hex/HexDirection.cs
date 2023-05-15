@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace Penwyn.HexMap
 {
-    public class HexDirection : MonoBehaviour
+    public class HexDirection
     {
         private static List<Hex> _directions = new List<Hex>() { new Hex(1, 0), new Hex(1, -1), new Hex(0, -1), new Hex(-1, 0), new Hex(-1, 1), new Hex(0, 1) };//Counter clockwise starting from East (aka Right).
 

@@ -41,6 +41,7 @@ namespace Penwyn.HexMap
             this.gameObject.name = $"[{hex.Q},{hex.R}]";
             _spinAble = type.SpinAble;
             _sprRenderer.sprite = type.Sprite;
+            hex.Load(type);
         }
 
         /// <summary>
@@ -79,7 +80,6 @@ namespace Penwyn.HexMap
         public void OnClick(BaseEventData eventData)
         {
             PointerEventData data = (PointerEventData)eventData;
-            Debug.Log(data.button);
             if (data.button == PointerEventData.InputButton.Left)
             {
                 HexTileEventList.Instance.TileSelected.RaiseEvent(this);

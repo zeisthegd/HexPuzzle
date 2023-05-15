@@ -12,12 +12,8 @@ namespace Penwyn.HexMap
     public class HexSpinner : SingletonMonoBehaviour<HexSpinner>
     {
         public bool WillLiftUp = true;
+        public bool EditorMode = false;
         private HexTile _chosenTile;
-
-        private void Start()
-        {
-
-        }
 
         public void SelectTile(HexTile tile)
         {
@@ -65,7 +61,7 @@ namespace Penwyn.HexMap
 
         private bool CanSpin()
         {
-            return _chosenTile != null && _chosenTile.SpinAble;
+            return _chosenTile != null && (EditorMode || _chosenTile.SpinAble);
         }
 
         private void OnEnable()

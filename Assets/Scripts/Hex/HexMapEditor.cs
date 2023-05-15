@@ -15,7 +15,7 @@ namespace Penwyn.HexMap
         public HexType EmptyType;
         public HexType HexToPlace;
 
-        private List<HexTile> _placeHex = new List<HexTile>();
+        private List<Hex> _placedHexes = new List<Hex>();
 
         private HexTile _chosenTile;
         private HexType _beforeChosenType;
@@ -64,12 +64,17 @@ namespace Penwyn.HexMap
             }
         }
 
+        /// <summary>
+        /// On left mouse click (or select button click). Place the chosen hex type on tile.
+        /// </summary>
+        /// <param name="tile"></param>
         private void OnTileSelected(HexTile tile)
         {
             if (tile != null && _chosenTile != null && tile == _chosenTile && HexToPlace != null)
             {
                 _chosenTile.Create(HexToPlace);
                 _beforeChosenType = tile.Type;
+                _placedHexes.Add(_chosenTile.Hex);
             }
         }
 
@@ -82,6 +87,7 @@ namespace Penwyn.HexMap
             if (tile == _chosenTile)
             {
                 _chosenTile.Create(EmptyType);
+                _placedHexes.Remove(_chosenTile.Hex);
                 _chosenTile = null;
             }
         }
@@ -103,6 +109,7 @@ namespace Penwyn.HexMap
             HexTileEventList.Instance.TileUnselected.OnEventRaised -= OnTileUnselected;
         }
         public HexTile ChosenTile { get => _chosenTile; }
+        public List<Hex> PlacedHexes { get => _placedHexes; }
     }
 
 }

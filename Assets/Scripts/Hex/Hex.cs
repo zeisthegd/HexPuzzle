@@ -6,40 +6,46 @@ using Penwyn.Tools;
 
 namespace Penwyn.HexMap
 {
+    [System.Serializable]
     public class Hex
     {
         public static float HexSize = 1;
-        public int Q { get; set; }//Column
-        public int R { get; set; }//Row
-        public int S { get => -Q - R; }//Slice
+        [SerializeField] private int _q;
+        [SerializeField] private int _r;
+        [SerializeField] private int _rotatedAngle;
+        [SerializeField] private HexType _type;
+
+        public int S { get => -_q - _r; }//Slice
 
         public Hex(int q, int r)
         {
-            Q = q;
-            R = r;
+            this._q = q;
+            this._r = r;
         }
 
         public Hex(int q, int r, HexType type)
         {
-            Q = q;
-            R = r;
+            this._q = q;
+            this._r = r;
             Load(type);
         }
 
         public void Load(HexType type)
         {
+            this.Type = type;
             _connectedDirs = new HexDirection.Direction[type.ConnectedDirections.Count];
             type.ConnectedDirections.CopyTo(this._connectedDirs);
+            RotatedAngle = 0;
         }
 
         public Hex Add(Hex b)
         {
-            return new Hex(Q + b.Q, R + b.R);
+            return new Hex(this._q + b._r, this._r + b._r);
         }
 
         public Hex Subtract(Hex b)
         {
-            return new Hex(Q - b.Q, R - b.R);
+            return new Hex(this._q - b._r, this._r - b._r);
         }
         #region Neighbor
 
@@ -54,7 +60,7 @@ namespace Penwyn.HexMap
         #region  DISTANCE
         public int Length()
         {
-            return (int)((Mathf.Abs(Q) + Mathf.Abs(R) + Mathf.Abs(S)) / 2);
+            return (int)((Mathf.Abs(this._q) + Mathf.Abs(this._r) + Mathf.Abs(S)) / 2);
         }
 
         public int Distance(Hex b)
@@ -64,7 +70,7 @@ namespace Penwyn.HexMap
         #endregion
 
         #region  #CONNECTION
-        private HexDirection.Direction[] _connectedDirs = new HexDirection.Direction[] { };
+        [SerializeField] private HexDirection.Direction[] _connectedDirs = new HexDirection.Direction[] { };
 
         public void SpinConnectLeft()
         {
@@ -77,6 +83,7 @@ namespace Penwyn.HexMap
                     else
                         _connectedDirs[i] = _connectedDirs[i] - 1;
                 }
+                RotateAngle(-60);
             }
         }
 
@@ -91,6 +98,20 @@ namespace Penwyn.HexMap
                     else
                         _connectedDirs[i] = _connectedDirs[i] + 1;
                 }
+                RotateAngle(60);
+            }
+        }
+
+        private void RotateAngle(int value)
+        {
+            RotatedAngle += value;
+            if (RotatedAngle < 0)
+            {
+                RotatedAngle = 360 - RotatedAngle;
+            }
+            if (RotatedAngle >= 360)
+            {
+                RotatedAngle -= 360;
             }
         }
 
@@ -98,33 +119,30 @@ namespace Penwyn.HexMap
 
         public static Vector3 HexToPixelWorldPos(Hex hex)
         {
-            float offSet = hex.R != 0 ? 1F * HexSize / 2.0F : 0;
-            if (hex.R < 0)
+            float offSet = hex._r != 0 ? 1F * HexSize / 2.0F : 0;
+            if (hex._r < 0)
                 offSet = -offSet;
 
-            var col = (hex.Q * HexSize) + offSet * Mathf.Abs(hex.R);
-            var row = ((HexSize * Mathf.Sqrt(3) / 2 * 1F) - 0.01F) * hex.R;
+            var col = (hex._q * HexSize) + offSet * Mathf.Abs(hex._r);
+            var row = ((HexSize * Mathf.Sqrt(3) / 2 * 1F) - 0.01F) * hex._r;
             return new Vector3(col, row);
         }
 
         public static Vector3 HexToWorldPos(Hex hex)
         {
-            float offSet = hex.R != 0 ? 1F * HexSize / 2.0F : 0;
-            if (hex.R < 0)
+            float offSet = hex._r != 0 ? 1F * HexSize / 2.0F : 0;
+            if (hex._r < 0)
                 offSet = -offSet;
 
-            var col = ((hex.Q * HexSize) + offSet * Mathf.Abs(hex.R));
-            var row = HexSize * Mathf.Sqrt(3) / 2 * hex.R;
+            var col = ((hex._q * HexSize) + offSet * Mathf.Abs(hex._r));
+            var row = HexSize * Mathf.Sqrt(3) / 2 * hex._r;
             return new Vector3(col, 0, row);
         }
-
-        public override string ToString()
-        {
-            return $"Hex: [{Q},{R},{S}]";
-        }
-
         public HexDirection.Direction[] ConnectedDirs { get => _connectedDirs; }
-
+        public int RotatedAngle { get => _rotatedAngle; set => _rotatedAngle = value; }
+        public HexType Type { get => _type; set => _type = value; }
+        public int Q { get => _q; set => _q = value; }
+        public int R { get => _r; set => _r = value; }
     }
 }
 

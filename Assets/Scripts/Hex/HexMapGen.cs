@@ -24,11 +24,10 @@ namespace Penwyn.HexMap
         public HexType EndHexData;
 
         [Header("Map Arrays")]
-        public readonly List<Hex> Map = new List<Hex>();
-        public readonly List<HexTile> TileMap = new List<HexTile>();
+        [ReadOnly] public List<Hex> Map = new List<Hex>();
+        [ReadOnly] public List<HexTile> TileMap = new List<HexTile>();
         private Hex _startHex;
         private Hex _endHex;
-
 
 
         private void Awake()
@@ -49,6 +48,18 @@ namespace Penwyn.HexMap
             GenerateRandomStartEnd();
         }
 
+        public virtual void Load(List<Hex> hexes)
+        {
+            foreach (Hex hex in hexes)
+            {
+                if (Find(hex) == null)
+                    CreateHexTile(hex, hex.Type);
+                else
+                    GetTile(hex).Create(hex, hex.Type);
+            }
+            Map = hexes;
+        }
+
         protected virtual void InitHexMap()
         {
             for (int x = -MapSize; x < MapSize; x++)
@@ -67,10 +78,14 @@ namespace Penwyn.HexMap
         {
             Hex newHex = new Hex(x, y, type);
             Map.Add(newHex);
+            CreateHexTile(newHex, type);
+        }
 
+        protected virtual void CreateHexTile(Hex hex, HexType type)
+        {
             HexTile newTile;
             newTile = Instantiate(HexTilePrefab);
-            newTile.Create(newHex, type);
+            newTile.Create(hex, type);
             newTile.transform.SetParent(this.transform);
             TileMap.Add(newTile);
         }

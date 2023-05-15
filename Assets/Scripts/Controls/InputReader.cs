@@ -16,6 +16,11 @@ namespace Penwyn.Game
         public event UnityAction SpinRightPressed;
         public event UnityAction SpinRightCancelled;
 
+        public event UnityAction LeftMousePressed;
+        public event UnityAction LeftMouseCancelled;
+        public event UnityAction RightMousePressed;
+        public event UnityAction RightMouseCancelled;
+
         private PlayerInput _playerInput;
 
 
@@ -31,18 +36,12 @@ namespace Penwyn.Game
 
         public void OnSpinLeft(UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
-            if (context.started)
-                SpinLeftPressed?.Invoke();
-            if (context.canceled)
-                SpinLeftCancelled?.Invoke();
+            InvokeContextStartedOrCancelled(context, SpinLeftPressed, SpinLeftCancelled);
         }
 
         public void OnSpinRight(UnityEngine.InputSystem.InputAction.CallbackContext context)
         {
-            if (context.started)
-                SpinRightPressed?.Invoke();
-            if (context.canceled)
-                SpinRightCancelled?.Invoke();
+            InvokeContextStartedOrCancelled(context, SpinRightPressed, SpinRightCancelled);
         }
 
         public void OnScroll(UnityEngine.InputSystem.InputAction.CallbackContext context)
@@ -67,6 +66,24 @@ namespace Penwyn.Game
         private bool IsScrollDown(float scrollVal)
         {
             return scrollVal < -0.1F;
+        }
+
+        public void OnLeftMouseClick(UnityEngine.InputSystem.InputAction.CallbackContext context)
+        {
+            InvokeContextStartedOrCancelled(context, LeftMousePressed, LeftMouseCancelled);
+        }
+
+        public void OnRightMouseClick(UnityEngine.InputSystem.InputAction.CallbackContext context)
+        {
+            InvokeContextStartedOrCancelled(context, RightMousePressed, RightMouseCancelled);
+        }
+
+        private void InvokeContextStartedOrCancelled(UnityEngine.InputSystem.InputAction.CallbackContext context, UnityAction pressedAction, UnityAction cancelledAction)
+        {
+            if (context.started)
+                pressedAction?.Invoke();
+            if (context.canceled)
+                cancelledAction?.Invoke();
         }
     }
 }

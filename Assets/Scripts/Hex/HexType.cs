@@ -4,13 +4,14 @@ using UnityEngine;
 
 namespace Penwyn.HexMap
 {
+    [System.Serializable]
     [CreateAssetMenu(menuName = "Hex/Tile")]
     public class HexType : ScriptableObject
     {
         public string ID = "hex";
         public Sprite Sprite;
         public List<HexDirection.Direction> ConnectedDirections;
-        public bool SpinAble  = false;
+        public bool SpinAble = false;
         public HexCategory Category;
     }
 }

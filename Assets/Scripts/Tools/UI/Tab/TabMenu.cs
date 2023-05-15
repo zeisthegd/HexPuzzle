@@ -24,7 +24,7 @@ namespace Penwyn.Tools
             AssignButtonsOnClick();
         }
 
-        public void ButtonPressed(Button button)
+        public virtual void ButtonPressed(Button button)
         {
             for (int i = 0; i < Contents.Count; i++)
             {

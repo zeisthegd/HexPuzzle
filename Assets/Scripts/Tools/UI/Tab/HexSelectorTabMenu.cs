@@ -19,6 +19,11 @@ namespace Penwyn.Tools
             button.gameObject.name = type.name;
             return button;
         }
+
+        public override void ButtonPressed(Button button)
+        {
+            base.ButtonPressed(button);
+        }
     }
 }
 

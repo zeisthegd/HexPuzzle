@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1f4b26e5f757704e9f8cd1530c91374, type: 3}
-  m_Name: 4WayX
+  m_Name: Straight
   m_EditorClassIdentifier: 
   ID: hex
-  Sprite: {fileID: -2080900979, guid: 90a01627784149840b92a3889b255e15, type: 3}
-  ConnectedDirections: 02000000050000000400000001000000
+  Sprite: {fileID: 1755349136, guid: 90a01627784149840b92a3889b255e15, type: 3}
+  ConnectedDirections: 0200000005000000
   SpinAble: 1
   Category: 3

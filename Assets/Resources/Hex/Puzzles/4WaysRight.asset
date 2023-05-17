@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: 4WaysRight
   m_EditorClassIdentifier: 
   ID: hex
-  Sprite: {fileID: 2119279490, guid: 90a01627784149840b92a3889b255e15, type: 3}
+  Sprite: {fileID: -2080900979, guid: 90a01627784149840b92a3889b255e15, type: 3}
   ConnectedDirections: 02000000050000000400000000000000
   SpinAble: 1
   Category: 3

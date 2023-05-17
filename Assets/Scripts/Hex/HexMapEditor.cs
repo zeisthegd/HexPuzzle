@@ -42,7 +42,7 @@ namespace Penwyn.HexMap
                 {
                     if (Mathf.Abs(x) < MapSize && Mathf.Abs(y) < MapSize && Mathf.Abs(-x - y) < MapSize)
                     {
-                        CreateNewHex(x, y, EmptyType);
+                        Hex newHex = CreateNewHex(x, y, EmptyType);
                     }
                 }
             }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: END_Hex
   m_EditorClassIdentifier: 
   ID: hex_end_1
-  Sprite: {fileID: 1866257087, guid: 90a01627784149840b92a3889b255e15, type: 3}
+  Sprite: {fileID: -1799845323, guid: 90a01627784149840b92a3889b255e15, type: 3}
   ConnectedDirections: 05000000
   SpinAble: 0
   Category: 2

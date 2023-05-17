@@ -35,7 +35,7 @@ namespace Penwyn.Tools
 
         public void DragCamera()
         {
-            Vector2 difference = CursorManager.Instance.GetMousePosition() - _camera.Follow.transform.position;
+                Vector2 difference = CursorManager.Instance.GetMousePosition() - _camera.Follow.transform.position;
             if (!_isCursorOnTile && _isDragging)
             {
                 _camera.Follow.transform.position = Vector3.Lerp(_camera.Follow.transform.position, (Vector2)_dragOrigin - difference, MoveSensitivity);

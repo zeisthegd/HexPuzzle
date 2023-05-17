@@ -52,7 +52,7 @@ namespace Penwyn.HexMap
             foreach (Hex hex in hexes)
             {
                 HexTile tile;
-                if (Find(hex) == null)
+                if (GetTile(hex) == null)
                 {
                     tile = CreateHexTile(hex, hex.Type);
                 }
@@ -77,19 +77,19 @@ namespace Penwyn.HexMap
             {
                 for (int y = MapSize; y > -MapSize; y--)
                 {
-                    if (Mathf.Abs(x) < MapSize && Mathf.Abs(y) < MapSize && Mathf.Abs(-x - y) < MapSize)
+                    if (IsInsideMapSize(x, y))
                     {
-                        CreateNewHex(x, y, HexTypes[Randomizer.Uniform(0, HexTypes.Count)]);
+                        Hex newHex = CreateNewHex(x, y, HexTypes[Randomizer.Uniform(0, HexTypes.Count)]);
                     }
                 }
             }
         }
 
-        protected virtual void CreateNewHex(int x, int y, HexType type)
+        protected virtual Hex CreateNewHex(int x, int y, HexType type)
         {
             Hex newHex = new Hex(x, y, type);
             Map.Add(newHex);
-            CreateHexTile(newHex, type);
+            return newHex;
         }
 
         protected virtual HexTile CreateHexTile(Hex hex, HexType type)
@@ -100,6 +100,16 @@ namespace Penwyn.HexMap
             newTile.transform.SetParent(this.transform);
             TileMap.Add(newTile);
             return newTile;
+        }
+
+        public bool IsInsideMapSize(int x, int y)
+        {
+            return IsInside(x, y, MapSize, MapSize);
+        }
+
+        public bool IsInside(int x, int y, int xConstraint, int yConstraint)
+        {
+            return Mathf.Abs(x) < xConstraint && Mathf.Abs(y) < yConstraint && Mathf.Abs(-x - y) < (xConstraint > yConstraint ? xConstraint : yConstraint);
         }
 
         public HexTile GetTile(Hex hex)

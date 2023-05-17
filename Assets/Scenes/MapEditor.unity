@@ -1061,45 +1061,6 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 743505342}
   m_CullTransparentMesh: 1
---- !u!1 &760181256 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6105228405607860778, guid: 50f00890a47c591448a4bf8fc3f46c8f, type: 3}
-  m_PrefabInstance: {fileID: 828554937}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &760181263
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 760181256}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_ShowDebugText: 0
-  m_ShowCameraFrustum: 1
-  m_IgnoreTimeScale: 0
-  m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
-  m_BlendUpdateMethod: 1
-  m_DefaultBlend:
-    m_Style: 1
-    m_Time: 2
-    m_CustomCurve:
-      serializedVersion: 2
-      m_Curve: []
-      m_PreInfinity: 2
-      m_PostInfinity: 2
-      m_RotationOrder: 4
-  m_CustomBlends: {fileID: 0}
-  m_CameraCutEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_CameraActivatedEvent:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!1 &766759602
 GameObject:
   m_ObjectHideFlags: 0
@@ -1242,22 +1203,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 6105228405607860777, guid: 50f00890a47c591448a4bf8fc3f46c8f, type: 3}
-      propertyPath: field of view
-      value: 34
-      objectReference: {fileID: 0}
-    - target: {fileID: 6105228405607860777, guid: 50f00890a47c591448a4bf8fc3f46c8f, type: 3}
-      propertyPath: m_BackGroundColor.b
-      value: 0.4627451
-      objectReference: {fileID: 0}
-    - target: {fileID: 6105228405607860777, guid: 50f00890a47c591448a4bf8fc3f46c8f, type: 3}
-      propertyPath: m_BackGroundColor.g
-      value: 0.40392157
-      objectReference: {fileID: 0}
-    - target: {fileID: 6105228405607860777, guid: 50f00890a47c591448a4bf8fc3f46c8f, type: 3}
-      propertyPath: m_BackGroundColor.r
-      value: 0.43529412
-      objectReference: {fileID: 0}
     - target: {fileID: 6105228405607860778, guid: 50f00890a47c591448a4bf8fc3f46c8f, type: 3}
       propertyPath: m_Name
       value: Main Camera
@@ -1304,10 +1249,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6105228405607860950, guid: 50f00890a47c591448a4bf8fc3f46c8f, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6105228405607860951, guid: 50f00890a47c591448a4bf8fc3f46c8f, type: 3}
-      propertyPath: m_Enabled
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

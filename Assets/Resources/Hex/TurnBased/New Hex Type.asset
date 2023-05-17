@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f1f4b26e5f757704e9f8cd1530c91374, type: 3}
-  m_Name: EMPTY_Hex
+  m_Name: New Hex Type
   m_EditorClassIdentifier: 
-  ID: hex_empty_1
-  Sprite: {fileID: 1782130489, guid: 90a01627784149840b92a3889b255e15, type: 3}
+  ID: hex
+  Sprite: {fileID: 0}
   ConnectedDirections: 
-  SpinAble: 1
+  SpinAble: 0
   Category: 0
